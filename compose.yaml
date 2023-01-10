@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  idp:
+    image: idp
+    build:
+      context: ./idp/
+      target: test-idp
+    command:
+      - start-dev
+    networks:
+      - net
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+
+  idp-config:
+    image: idp-config
+    build:
+      context: ./idp-config/
+      target: idp-config
+    command:
+      - --version
+    depends_on:
+      idp:
+        condition: service_started
+    networks:
+      - net
+
+networks:
+  net:
+
+
+
+
+
+
+
+
+
+
+
