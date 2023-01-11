@@ -23,24 +23,11 @@ services:
     build:
       context: ./idp-config/
       target: idp-config
-    command:
-      - --version
     depends_on:
       idp:
-        condition: service_started
+        condition: service_healthy
     networks:
       - net
 
 networks:
   net:
-
-
-
-
-
-
-
-
-
-
-

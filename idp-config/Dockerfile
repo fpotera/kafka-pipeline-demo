@@ -1,9 +1,10 @@
-FROM docker.io/curlimages/curl AS idp-config
+FROM docker.io/library/alpine AS idp-config
 
-USER root
+RUN apk upgrade
+RUN apk add --no-cache brotli brotli-dev libssh2 nghttp2-dev curl bash && rm -fr /var/cache/apk/*
 
-RUN mkdir -p /config
-WORKDIR /config
-COPY ./config/ ./
+COPY config /config
 
-ENTRYPOINT bash -c '/config/local-configure-keycloak.sh'
+RUN chmod +x /config/local-configure-keycloak.sh
+
+ENTRYPOINT '/config/local-configure-keycloak.sh'
