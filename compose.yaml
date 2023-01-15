@@ -29,5 +29,17 @@ services:
     networks:
       - net
 
+  events-source:
+    image: events-source
+    build:
+      context: ./events-source/
+      target: events-source
+    ports:
+      - "8081:8081"
+    expose:
+      - "8081"
+    networks:
+      - net
+
 networks:
   net:
