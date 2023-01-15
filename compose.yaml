@@ -32,7 +32,8 @@ services:
   events-source:
     image: events-source
     build:
-      context: ./events-source/
+      context: ./
+      dockerfile: events-source.dockerfile
       target: events-source
     ports:
       - "8081:8081"
