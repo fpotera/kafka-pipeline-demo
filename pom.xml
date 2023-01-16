@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>java-commons</module>
         <module>events-source</module>
     </modules>
 </project>
