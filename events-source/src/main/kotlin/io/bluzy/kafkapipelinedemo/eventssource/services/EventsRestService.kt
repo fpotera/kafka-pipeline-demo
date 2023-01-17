@@ -12,20 +12,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package io.bluzy.kafkapipelinedemo.eventssource
+package io.bluzy.kafkapipelinedemo.eventssource.services
 
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Body
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Message
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Messages
-import io.bluzy.kafkapipelinedemo.commons.idp.events.type.UPDATE
+import io.bluzy.kafkapipelinedemo.eventssource.components.IdPEvents
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
 class EventsRestService {
+    @Autowired
+    private val idpEvents: IdPEvents? = null
+
     @GetMapping("/events")
-    fun getEvents(): Messages {
-        return Messages.builder().message(Message.builder().body(Body.builder().message(UPDATE.builder().build()).build()).build()).build()
+    fun getEvents(): String {
+        return idpEvents?.getNotifications("EU")?:"Nimic!!!"
     }
 }
