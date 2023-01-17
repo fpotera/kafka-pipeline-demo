@@ -100,23 +100,6 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>analyze</id>
-						<goals>
-							<goal>analyze-only</goal>
-						</goals>
-						<configuration>
-							<ignoredDependencies>
-								<ignoredDependency>io.bluzy.kafka-pipeline-demo:java-commons</ignoredDependency>
-							</ignoredDependencies>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 </project>

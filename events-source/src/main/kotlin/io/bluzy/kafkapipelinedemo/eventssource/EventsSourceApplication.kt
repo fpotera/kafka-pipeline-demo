@@ -36,7 +36,7 @@ fun main(args: Array<String>) {
 @EnableWebSecurity
 class CustomSecurityConfiguration {
 
-	val jwksUri = "http://localhost:8080/realms/master/protocol/openid-connect/certs"
+	val jwksUri = "http://idp:8080/realms/master/protocol/openid-connect/certs"
 
 	@Bean
 	@Throws(Exception::class)
@@ -45,8 +45,7 @@ class CustomSecurityConfiguration {
 			.authorizeHttpRequests(
 				Customizer { authorize: AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry ->
 					authorize
-						.requestMatchers("/events/**").hasAuthority("SCOPE_profile")
-						.anyRequest().authenticated()
+						.requestMatchers("/events").permitAll()
 				}
 			)
 			.oauth2ResourceServer { oauth2: OAuth2ResourceServerConfigurer<HttpSecurity?> ->
