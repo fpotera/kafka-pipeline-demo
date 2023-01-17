@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class EventsRestService {
-    @GetMapping("/other")
+    @GetMapping("/events")
     fun getEvents(): Messages {
         return Messages.builder().message(Message.builder().body(Body.builder().message(UPDATE.builder().build()).build()).build()).build()
     }
