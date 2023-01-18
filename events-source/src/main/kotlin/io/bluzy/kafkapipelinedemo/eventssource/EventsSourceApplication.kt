@@ -16,47 +16,11 @@ package io.bluzy.kafkapipelinedemo.eventssource
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.Customizer
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer
-import org.springframework.security.web.SecurityFilterChain
+
 
 @SpringBootApplication
 class EventsSourceApplication
 
 fun main(args: Array<String>) {
 	runApplication<EventsSourceApplication>(*args)
-}
-
-@Configuration
-@EnableWebSecurity
-class CustomSecurityConfiguration {
-
-	val jwksUri = "http://idp:8080/realms/master/protocol/openid-connect/certs"
-
-	@Bean
-	@Throws(Exception::class)
-	fun filterChain(http: HttpSecurity): SecurityFilterChain {
-		http
-			.authorizeHttpRequests(
-				Customizer { authorize: AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry ->
-					authorize
-						.requestMatchers("/events").permitAll()
-				}
-			)
-			.oauth2ResourceServer { oauth2: OAuth2ResourceServerConfigurer<HttpSecurity?> ->
-				oauth2
-					.jwt(
-						Customizer { jwt: OAuth2ResourceServerConfigurer<HttpSecurity?>.JwtConfigurer ->
-							jwt
-								.jwkSetUri(jwksUri)
-						}
-					)
-			}
-		return http.build()
-	}
 }
