@@ -16,7 +16,10 @@ package io.bluzy.kafkapipelinedemo.eventssource.services
 
 import io.bluzy.kafkapipelinedemo.eventssource.components.IdPEvents
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 
@@ -25,8 +28,13 @@ class EventsRestService {
     @Autowired
     private val idpEvents: IdPEvents? = null
 
-    @GetMapping("/events")
-    fun getEvents(): String {
-        return idpEvents?.getNotifications("EU")?:"Nimic!!!"
+    @GetMapping("/events/{client_id}")
+    fun getEvents(@PathVariable("client_id") clientId: String): String {
+        return idpEvents?.getNotifications(clientId)?:"{}"
+    }
+
+    @DeleteMapping("/events/{client_id}")
+    fun deleteEvent(@PathVariable("client_id") clientId: String,  @RequestBody receiptHandle: String) {
+        idpEvents?.deleteNotification(clientId, receiptHandle)
     }
 }
