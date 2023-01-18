@@ -10,13 +10,12 @@ services:
       - start-dev
     networks:
       - net
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
     ports:
       - "8080:8080"
+      - "8443:8443"
     expose:
       - "8080"
+      - "8443"
 
   idp-config:
     image: idp-config
