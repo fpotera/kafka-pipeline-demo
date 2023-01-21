@@ -12,7 +12,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package io.bluzy.kafkapipelinedemo.commons.idp.clients.common.model.oauth;
+package io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.configuration.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -165,11 +165,20 @@ public class OpenIDConfiguration {
     @JsonProperty("pushed_authorization_request_endpoint")
     private String pushedAuthorizationRequestEndpoint;
 
+    @JsonProperty("acr_values_supported")
+    private String[] acrValuesSupported;
+
+    @JsonProperty("userinfo_encryption_alg_values_supported")
+    private String[] userinfoEncryptionAlgValuesSupported;
+
+    @JsonProperty("userinfo_encryption_enc_values_supported")
+    private String[] userinfoEncryptionEncValuesSupported;
+
     @JsonProperty("mtls_endpoint_aliases")
     private MtlsEndpointAliases mtlsEndpointAliases;
 
     @Data
-    public class MtlsEndpointAliases {
+    public static class MtlsEndpointAliases {
 
         @JsonProperty("token_endpoint")
         private String tokenEndpoint;

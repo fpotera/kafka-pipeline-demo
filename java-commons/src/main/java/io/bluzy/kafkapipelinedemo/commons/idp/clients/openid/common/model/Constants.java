@@ -12,7 +12,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package io.bluzy.kafkapipelinedemo.commons.idp.clients.common.model.oauth;
+package io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.common.model;
 
 public interface Constants {
     public String OPENID_SCOPE_NAME = "openid";
@@ -31,6 +31,8 @@ public interface Constants {
     public String IAT_CLAIM_NAME = "iat";
     public String EXP_CLAIM_NAME = "exp";
     public String AUTH_TIME_CLAIM_NAME = "auth_time";
+    public String UNKNOWN_CLAIM_NAME = "unknown";
+
     public String NAME_CLAIM_NAME = "name";
     public String EMAIL_CLAIM_NAME = "email";
     public String GIVEN_NAME_CLAIM_NAME = "given_name";
@@ -45,4 +47,5 @@ public interface Constants {
     public String CLIENT_CREDENTIALS_GRANT_TYPE_NAME = "client_credentials";
     public String DEVICE_CODE_GRANT_TYPE_NAME = "urn:ietf:params:oauth:grant-type:device_code";
     public String CIBA_GRANT_TYPE_NAME = "urn:openid:params:grant-type:ciba";
+    public String UNKNOWN_GRANT_TYPE_NAME = "unknown";
 }
