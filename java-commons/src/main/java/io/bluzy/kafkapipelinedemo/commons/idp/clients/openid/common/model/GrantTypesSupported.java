@@ -12,23 +12,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package io.bluzy.kafkapipelinedemo.commons.idp.clients.common.model.oauth;
+package io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.common.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import static io.bluzy.kafkapipelinedemo.commons.idp.clients.common.model.oauth.Constants.*;
-
 
 public enum GrantTypesSupported {
 
-    REFRESH_TOKEN(REFRESH_TOKEN_GRANT_TYPE_NAME),
-    AUTHORIZATION_CODE(AUTHORIZATION_CODE_GRANT_TYPE_NAME),
-    CLIENT_CREDENTIALS(CLIENT_CREDENTIALS_GRANT_TYPE_NAME),
-    DEVICE_CODE(DEVICE_CODE_GRANT_TYPE_NAME),
-    CIBA(CIBA_GRANT_TYPE_NAME),
-    PASSWORD(PASSWORD_GRANT_TYPE_NAME),
-    IMPLICIT(IMPLICIT_GRANT_TYPE_NAME);
+    REFRESH_TOKEN(Constants.REFRESH_TOKEN_GRANT_TYPE_NAME),
+    AUTHORIZATION_CODE(Constants.AUTHORIZATION_CODE_GRANT_TYPE_NAME),
+    CLIENT_CREDENTIALS(Constants.CLIENT_CREDENTIALS_GRANT_TYPE_NAME),
+    DEVICE_CODE(Constants.DEVICE_CODE_GRANT_TYPE_NAME),
+    CIBA(Constants.CIBA_GRANT_TYPE_NAME),
+    PASSWORD(Constants.PASSWORD_GRANT_TYPE_NAME),
+    IMPLICIT(Constants.IMPLICIT_GRANT_TYPE_NAME),
+    UNKNOWN(Constants.UNKNOWN_GRANT_TYPE_NAME);
 
     private String label;
 
@@ -39,13 +38,14 @@ public enum GrantTypesSupported {
     @JsonCreator
     public static GrantTypesSupported fromValue(String scope) {
         return switch (scope) {
-            case REFRESH_TOKEN_GRANT_TYPE_NAME -> REFRESH_TOKEN;
-            case AUTHORIZATION_CODE_GRANT_TYPE_NAME -> AUTHORIZATION_CODE;
-            case CLIENT_CREDENTIALS_GRANT_TYPE_NAME -> CLIENT_CREDENTIALS;
-            case DEVICE_CODE_GRANT_TYPE_NAME -> DEVICE_CODE;
-            case CIBA_GRANT_TYPE_NAME -> CIBA;
-            case PASSWORD_GRANT_TYPE_NAME -> PASSWORD;
-            case IMPLICIT_GRANT_TYPE_NAME -> IMPLICIT;
+            case Constants.REFRESH_TOKEN_GRANT_TYPE_NAME -> REFRESH_TOKEN;
+            case Constants.AUTHORIZATION_CODE_GRANT_TYPE_NAME -> AUTHORIZATION_CODE;
+            case Constants.CLIENT_CREDENTIALS_GRANT_TYPE_NAME -> CLIENT_CREDENTIALS;
+            case Constants.DEVICE_CODE_GRANT_TYPE_NAME -> DEVICE_CODE;
+            case Constants.CIBA_GRANT_TYPE_NAME -> CIBA;
+            case Constants.PASSWORD_GRANT_TYPE_NAME -> PASSWORD;
+            case Constants.IMPLICIT_GRANT_TYPE_NAME -> IMPLICIT;
+            default -> UNKNOWN;
         };
 
     }
