@@ -14,8 +14,9 @@
  */
 package io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.util;
 
+import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
-import com.nimbusds.jwt.PlainJWT;
+import com.nimbusds.jwt.JWTParser;
 import lombok.extern.slf4j.Slf4j;
 
 import static io.bluzy.kafkapipelinedemo.commons.logging.Markers.SECURITY;
@@ -26,9 +27,9 @@ public class Utils {
 
     public static String jwtToString(String token) {
         try {
-            PlainJWT plainJWT = PlainJWT.parse(token);
-            JWTClaimsSet claims = plainJWT.getJWTClaimsSet();
-            return "sub: ["+claims.getSubject()+"] iss: ["+claims.getIssuer()+"] jti: ["+claims.getJWTID()+"] scp: ["+extractStringClaim(claims, "scp")+"]";
+            JWT jwtParser = JWTParser.parse(token);
+            JWTClaimsSet claims = jwtParser.getJWTClaimsSet();
+            return "sub: ["+claims.getSubject()+"] iss: ["+claims.getIssuer()+"] jti: ["+claims.getJWTID()+"] scope: ["+extractStringClaim(claims, "scope")+"]";
         }
         catch (Throwable th) {
             log.error(SECURITY, "malformed accessToken: {} error: {}", token, th.getMessage());
@@ -39,5 +40,12 @@ public class Utils {
     private static String extractStringClaim(JWTClaimsSet claims, String claimName) {
         Object claim = claims.getClaim(claimName);
         return nonNull(claim)?claim.toString():"";
+    }
+
+    public static Object maskToken(Object obj) {
+        if(nonNull(obj) && obj instanceof String && obj.toString().startsWith("ey")) {
+            return obj.toString().substring(0, 6) + "******" + obj.toString().substring(obj.toString().length() - 6);
+        }
+        return obj;
     }
 }

@@ -16,7 +16,7 @@ package io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.configuration.serv
 
 import io.bluzy.kafkapipelinedemo.commons.configuration.ServiceConfigurationProperties;
 import io.bluzy.kafkapipelinedemo.commons.configuration.ServiceConfigurationPropertiesImpl;
-import io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.configuration.model.OpenIDConfiguration;
+import io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.authentication.services.M2MTokenService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
@@ -26,11 +26,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static java.lang.System.out;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
@@ -38,16 +37,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 public class OpenIDConfigurationTest {
     @Autowired
-    OpenIDConfigurationService openIDConfigurationService;
+    M2MTokenService m2mTokenService;
 
     @Test
     public void test() {
-        AtomicReference<Optional<OpenIDConfiguration>> openIDConfiguration = new AtomicReference<>(Optional.empty());
+        AtomicReference<String> m2mToken = new AtomicReference<>(null);
         assertDoesNotThrow(()->{
-            openIDConfiguration.set(openIDConfigurationService.getIdPConfiguration());
+            m2mToken.set(m2mTokenService.getM2MToken());
         });
-
-        assertTrue(openIDConfiguration.get().isPresent());
+        String token = m2mToken.get();
+        assertNotNull(token);
+        out.println(token);
     }
 }
 
@@ -63,5 +63,10 @@ class Configuration {
     @Bean
     public ServiceConfigurationProperties buildServiceConfigurationProperties() {
         return new ServiceConfigurationPropertiesImpl();
+    }
+
+    @Bean
+    public M2MTokenService buildM2MTokenService() {
+        return new M2MTokenService(buildServiceConfigurationProperties(), buildOpenIDConfigurationService());
     }
 }
