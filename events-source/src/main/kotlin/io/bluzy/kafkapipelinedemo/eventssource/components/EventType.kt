@@ -15,11 +15,11 @@
 package io.bluzy.kafkapipelinedemo.eventssource.components
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Body
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Message
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Messages
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Type
-import io.bluzy.kafkapipelinedemo.commons.idp.events.type.*
+import io.bluzy.kafkapipelinedemo.commons.events.model.Body
+import io.bluzy.kafkapipelinedemo.commons.events.model.Message
+import io.bluzy.kafkapipelinedemo.commons.events.model.Messages
+import io.bluzy.kafkapipelinedemo.commons.events.model.Type
+import io.bluzy.kafkapipelinedemo.commons.events.model.*
 import org.apache.commons.lang3.tuple.ImmutablePair
 import java.util.*
 
@@ -31,53 +31,53 @@ enum class EventType {
     fun buildNotificationEvent(vararg args: Any): ImmutablePair<ImmutablePair<String, String>, Messages> {
         var evt: Type? = null
         evt = when (this) {
-            CANCEL_TAKEOUT_SESSION -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.CANCEL_TAKEOUT_SESSION.builder()
+            CANCEL_TAKEOUT_SESSION -> io.bluzy.kafkapipelinedemo.commons.events.model.CANCEL_TAKEOUT_SESSION.builder()
                 .takeoutSessionId(args[0] as String)
                 .userId(args[1] as String)
                 .build()
 
-            DELETE -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.DELETE.builder()
+            DELETE -> io.bluzy.kafkapipelinedemo.commons.events.model.DELETE.builder()
                 .id(args[0] as String)
                 .build()
 
-            INSERT -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.INSERT.builder()
+            INSERT -> io.bluzy.kafkapipelinedemo.commons.events.model.INSERT.builder()
                 .id(args[0] as String)
                 .build()
 
-            UPDATE -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.UPDATE.builder()
+            UPDATE -> io.bluzy.kafkapipelinedemo.commons.events.model.UPDATE.builder()
                 .fields(listOf(*args[0] as Array<String?>))
                 .id(args[1] as String)
                 .build()
 
-            RESET_PASSWORD -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.RESET_PASSWORD.builder()
+            RESET_PASSWORD -> io.bluzy.kafkapipelinedemo.commons.events.model.RESET_PASSWORD.builder()
                 .id(args[0] as String)
                 .build()
 
-            COMPOSITE_SCOPE_ELEMENTS_CHANGED -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.COMPOSITE_SCOPE_ELEMENTS_CHANGED.builder()
+            COMPOSITE_SCOPE_ELEMENTS_CHANGED -> io.bluzy.kafkapipelinedemo.commons.events.model.COMPOSITE_SCOPE_ELEMENTS_CHANGED.builder()
                 .elements(listOf(*args[0] as Array<String?>))
                 .scope(args[1] as String)
                 .build()
 
-            CONSENT_GROUP_CLIENT_IDS_CHANGED -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.CONSENT_GROUP_CLIENT_IDS_CHANGED.builder()
+            CONSENT_GROUP_CLIENT_IDS_CHANGED -> io.bluzy.kafkapipelinedemo.commons.events.model.CONSENT_GROUP_CLIENT_IDS_CHANGED.builder()
                 .clientIds(listOf(*args[0] as Array<String?>))
                 .groupId(args[1] as String)
                 .build()
 
-            GRANT_SCOPE_CONSENT -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.GRANT_SCOPE_CONSENT.builder()
+            GRANT_SCOPE_CONSENT -> io.bluzy.kafkapipelinedemo.commons.events.model.GRANT_SCOPE_CONSENT.builder()
                 .clientIds(listOf(*args[0] as Array<String?>))
                 .userId(args[1] as String)
                 .scopes(listOf(*args[2] as Array<String?>))
                 .consentedClientIds(listOf(*args[3] as Array<String?>))
                 .build()
 
-            REVOKE_SCOPE_CONSENT -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.REVOKE_SCOPE_CONSENT.builder()
+            REVOKE_SCOPE_CONSENT -> io.bluzy.kafkapipelinedemo.commons.events.model.REVOKE_SCOPE_CONSENT.builder()
                 .clientIds(listOf(*args[0] as Array<String?>))
                 .userId(args[1] as String)
                 .scopes(listOf(*args[2] as Array<String?>))
                 .consentedClientIds(listOf(*args[3] as Array<String?>))
                 .build()
 
-            UPDATE_MARKETING_PERMISSION -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.UPDATE_MARKETING_PERMISSION.builder()
+            UPDATE_MARKETING_PERMISSION -> io.bluzy.kafkapipelinedemo.commons.events.model.UPDATE_MARKETING_PERMISSION.builder()
                 .clientIds(listOf(*args[0] as Array<String?>))
                 .userId(args[1] as String)
                 .countryCode(args[2] as String)
@@ -88,7 +88,7 @@ enum class EventType {
                 .expiresAt(args[7] as String)
                 .build()
 
-            DOCUMENT_CONSENT_CHANGED -> io.bluzy.kafkapipelinedemo.commons.idp.events.type.DOCUMENT_CONSENT_CHANGED.builder()
+            DOCUMENT_CONSENT_CHANGED -> io.bluzy.kafkapipelinedemo.commons.events.model.DOCUMENT_CONSENT_CHANGED.builder()
                 .userId(args[0] as String)
                 .clientId(args[1] as String)
                 .clientIds(listOf(*args[2] as Array<String?>))
@@ -124,41 +124,41 @@ enum class EventType {
         when (this) {
             CANCEL_TAKEOUT_SESSION -> evt = mapper.readValue(
                 event,
-                io.bluzy.kafkapipelinedemo.commons.idp.events.type.CANCEL_TAKEOUT_SESSION::class.java
+                io.bluzy.kafkapipelinedemo.commons.events.model.CANCEL_TAKEOUT_SESSION::class.java
             )
 
-            DELETE -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.idp.events.type.DELETE::class.java)
-            INSERT -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.idp.events.type.INSERT::class.java)
-            UPDATE -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.idp.events.type.UPDATE::class.java)
-            RESET_PASSWORD -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.idp.events.type.RESET_PASSWORD::class.java)
+            DELETE -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.events.model.DELETE::class.java)
+            INSERT -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.events.model.INSERT::class.java)
+            UPDATE -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.events.model.UPDATE::class.java)
+            RESET_PASSWORD -> evt = mapper.readValue(event, io.bluzy.kafkapipelinedemo.commons.events.model.RESET_PASSWORD::class.java)
             COMPOSITE_SCOPE_ELEMENTS_CHANGED -> evt = mapper.readValue(
                 event,
-                io.bluzy.kafkapipelinedemo.commons.idp.events.type.COMPOSITE_SCOPE_ELEMENTS_CHANGED::class.java
+                io.bluzy.kafkapipelinedemo.commons.events.model.COMPOSITE_SCOPE_ELEMENTS_CHANGED::class.java
             )
 
             CONSENT_GROUP_CLIENT_IDS_CHANGED -> evt = mapper.readValue(
                 event,
-                io.bluzy.kafkapipelinedemo.commons.idp.events.type.CONSENT_GROUP_CLIENT_IDS_CHANGED::class.java
+                io.bluzy.kafkapipelinedemo.commons.events.model.CONSENT_GROUP_CLIENT_IDS_CHANGED::class.java
             )
 
             GRANT_SCOPE_CONSENT -> evt = mapper.readValue(
                 event,
-                io.bluzy.kafkapipelinedemo.commons.idp.events.type.GRANT_SCOPE_CONSENT::class.java
+                io.bluzy.kafkapipelinedemo.commons.events.model.GRANT_SCOPE_CONSENT::class.java
             )
 
             REVOKE_SCOPE_CONSENT -> evt = mapper.readValue(
                 event,
-                io.bluzy.kafkapipelinedemo.commons.idp.events.type.REVOKE_SCOPE_CONSENT::class.java
+                io.bluzy.kafkapipelinedemo.commons.events.model.REVOKE_SCOPE_CONSENT::class.java
             )
 
             UPDATE_MARKETING_PERMISSION -> evt = mapper.readValue(
                 event,
-                io.bluzy.kafkapipelinedemo.commons.idp.events.type.UPDATE_MARKETING_PERMISSION::class.java
+                io.bluzy.kafkapipelinedemo.commons.events.model.UPDATE_MARKETING_PERMISSION::class.java
             )
 
             DOCUMENT_CONSENT_CHANGED -> evt = mapper.readValue(
                 event,
-                io.bluzy.kafkapipelinedemo.commons.idp.events.type.DOCUMENT_CONSENT_CHANGED::class.java
+                io.bluzy.kafkapipelinedemo.commons.events.model.DOCUMENT_CONSENT_CHANGED::class.java
             )
         }
         val body = Body.builder()

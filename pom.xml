@@ -15,5 +15,6 @@
     <modules>
         <module>java-commons</module>
         <module>events-source</module>
+        <module>events-distributor</module>
     </modules>
 </project>
