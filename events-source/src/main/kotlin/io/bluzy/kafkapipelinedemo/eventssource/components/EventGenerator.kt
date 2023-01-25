@@ -14,7 +14,7 @@
  */
 package io.bluzy.kafkapipelinedemo.eventssource.components
 
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Messages
+import io.bluzy.kafkapipelinedemo.commons.events.model.Messages
 import jakarta.annotation.PostConstruct
 import org.apache.commons.lang3.tuple.ImmutablePair
 import org.slf4j.LoggerFactory

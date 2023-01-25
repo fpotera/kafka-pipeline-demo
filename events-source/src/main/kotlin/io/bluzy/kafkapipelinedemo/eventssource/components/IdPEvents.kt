@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.nimbusds.jose.shaded.gson.JsonArray
 import com.nimbusds.jose.shaded.gson.JsonObject
-import io.bluzy.kafkapipelinedemo.commons.idp.events.Messages
+import io.bluzy.kafkapipelinedemo.commons.events.model.Messages
 import org.apache.commons.lang3.tuple.MutablePair
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
