@@ -19,8 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.ldap.LdapAutoConfiguration;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
@@ -37,16 +35,11 @@ import static org.springframework.util.ClassUtils.getUserClass;
 @Import({})
 @Slf4j
 @RequiredArgsConstructor
-public class Application extends SpringBootServletInitializer {
+public class Application {
 
     @SuppressWarnings("squid:S2095")    // No strict cleanup required. This is the entry point.
     public static void main(final String[] args) {
         SpringApplication.run(Application.class, args);
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Application.class);
     }
 
     @Bean
