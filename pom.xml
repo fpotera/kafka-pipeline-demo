@@ -12,6 +12,37 @@
     <artifactId>kafka-pipeline-demo-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <url>https://github.com/fpotera/kafka-pipeline-demo</url>
+    <organization>
+        <name>Bluzy IO</name>
+        <url>https://bluzy.io</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>fpotera</id>
+            <name>Florin Potera</name>
+            <email>*</email>
+            <roles>
+                <role>project lead</role>
+            </roles>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:scm:git:git@github.com:fpotera/kafka-pipeline-demo.git</connection>
+        <developerConnection>scm:git:scm:git:ssh://git@github.com:fpotera/kafka-pipeline-demo.git</developerConnection>
+        <url>https://github.com/fpotera/kafka-pipeline-demo</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/fpotera/kafka-pipeline-demo/issues</url>
+    </issueManagement>
     <modules>
         <module>java-commons</module>
         <module>events-source</module>
