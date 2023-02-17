@@ -14,50 +14,35 @@
  */
 package io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.configuration.services;
 
-import java.io.IOException;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bluzy.kafkapipelinedemo.commons.configuration.ServiceConfigurationProperties;
 import io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.configuration.model.OpenIDConfiguration;
+import io.bluzy.kafkapipelinedemo.commons.idp.clients.web.services.WebClientBuilderService;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import static java.util.Objects.nonNull;
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class OpenIDConfigurationService {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private WebClient webClient;
 
-    private OkHttpClient httpClient = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build();
+    public OpenIDConfigurationService(ServiceConfigurationProperties serviceProperties,
+                                      WebClientBuilderService webClientBuilderService) {
 
-    private String idPConfigurationEndpointUrl;
-
-    public OpenIDConfigurationService(ServiceConfigurationProperties serviceProperties) {
-        this.idPConfigurationEndpointUrl = serviceProperties.getIdPConfigurationEndpointUrl();
+        webClient = webClientBuilderService.buildBaseWebClient()
+                .baseUrl(serviceProperties.getIdPConfigurationEndpointUrl())
+                .build();
     }
 
     public Optional<OpenIDConfiguration> getIdPConfiguration() {
         Optional<OpenIDConfiguration> openIDConfiguration = Optional.empty();
-        try {
-            Response response = httpClient.newCall(new Request.Builder().get().url(idPConfigurationEndpointUrl).build()).execute();
-            try(response) {
-                if (response.code() == 200 && nonNull(response.body())) {
-                    log.debug("Received successful response from configEndpointUrl.");
-                    String jsonString = response.body().string();
-                    openIDConfiguration = Optional.of(mapper.readValue(jsonString, OpenIDConfiguration.class));
-                }
-            }
-        } catch (IOException e) {
-            log.error("Error in accessing configEndpointUrl: {} with error: {}", idPConfigurationEndpointUrl, e.getMessage());
-            throw new RuntimeException("IdP configuration endpoint not reachable.", e);
-        }
-        return openIDConfiguration;
+
+        return webClient.get()
+                .retrieve()
+                .bodyToMono(OpenIDConfiguration.class)
+                .blockOptional();
     }
 }

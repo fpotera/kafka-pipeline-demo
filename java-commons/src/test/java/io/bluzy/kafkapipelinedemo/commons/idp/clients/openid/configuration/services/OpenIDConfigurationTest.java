@@ -17,6 +17,7 @@ package io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.configuration.serv
 import io.bluzy.kafkapipelinedemo.commons.configuration.ServiceConfigurationProperties;
 import io.bluzy.kafkapipelinedemo.commons.configuration.ServiceConfigurationPropertiesImpl;
 import io.bluzy.kafkapipelinedemo.commons.idp.clients.openid.authentication.services.M2MTokenService;
+import io.bluzy.kafkapipelinedemo.commons.idp.clients.web.services.WebClientBuilderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
@@ -57,7 +58,8 @@ public class OpenIDConfigurationTest {
 class Configuration {
     @Bean
     public OpenIDConfigurationService buildOpenIDConfigurationService() {
-        return new OpenIDConfigurationService(buildServiceConfigurationProperties());
+        return new OpenIDConfigurationService(buildServiceConfigurationProperties(),
+                buildWebClientBuilderService());
     }
 
     @Bean
@@ -67,6 +69,12 @@ class Configuration {
 
     @Bean
     public M2MTokenService buildM2MTokenService() {
-        return new M2MTokenService(buildServiceConfigurationProperties(), buildOpenIDConfigurationService());
+        return new M2MTokenService(buildServiceConfigurationProperties(), buildOpenIDConfigurationService(),
+                buildWebClientBuilderService());
+    }
+
+    @Bean
+    public WebClientBuilderService buildWebClientBuilderService() {
+        return new WebClientBuilderService();
     }
 }
