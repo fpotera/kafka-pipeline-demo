@@ -60,8 +60,7 @@ public class M2MTokenService {
         this.serviceProperties = serviceProperties;
         this.idPConfigurationService = idPConfigurationService;
 
-        webClient = webClientBuilderService.buildBaseWebClient()
-                .build();
+        webClient = webClientBuilderService.buildBaseWebClient();
     }
 
     public String getM2MToken() throws ParseException {

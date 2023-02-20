@@ -27,13 +27,14 @@ import java.time.Duration;
 @Service
 public class WebClientBuilderService {
 
-    public WebClient.Builder buildBaseWebClient() {
+    public WebClient buildBaseWebClient() {
         HttpClient httpClient = HttpClient.create()
                 .responseTimeout(Duration.ofSeconds(60))
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
 
         return WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(httpClient));
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .build();
     }
 
 }
