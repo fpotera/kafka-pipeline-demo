@@ -16,7 +16,8 @@ package io.bluzy.kafkapipelinedemo.eventsdistributor.configproperties;
 
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.util.StringUtils;
+
+import static org.springframework.util.StringUtils.hasLength;
 
 @Data
 public class IntegratedConfig {
@@ -31,7 +32,7 @@ public class IntegratedConfig {
 
     @ToString.Include(name = "clientSecret")
     private String clientSecretMasker() {
-        return StringUtils.isEmpty(clientSecret) ? ""
+        return !hasLength(clientSecret) ? ""
                 : clientSecret.substring(0, 3) + "******" + clientSecret.substring(clientSecret.length() - 3);
     }
 }
