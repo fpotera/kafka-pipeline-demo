@@ -18,7 +18,8 @@ import lombok.Data;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
+
+import static org.springframework.util.StringUtils.hasLength;
 
 
 @Data
@@ -32,6 +33,6 @@ public class ServiceConfigurationPropertiesImpl implements ServiceConfigurationP
 
     @ToString.Include(name = "clientSecret")
     private String clientSecretMasker() {
-        return StringUtils.isEmpty(clientSecret) ? ""
+        return !hasLength(clientSecret) ? ""
                 : clientSecret.substring(0, 3) + "******" + clientSecret.substring(clientSecret.length() - 3); }
 }
