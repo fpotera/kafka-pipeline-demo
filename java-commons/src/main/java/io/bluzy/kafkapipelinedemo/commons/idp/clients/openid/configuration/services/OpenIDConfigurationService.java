@@ -33,6 +33,7 @@ public class OpenIDConfigurationService {
                                       WebClientBuilderService webClientBuilderService) {
 
         webClient = webClientBuilderService.buildBaseWebClient()
+                .mutate()
                 .baseUrl(serviceProperties.getIdPConfigurationEndpointUrl())
                 .build();
     }
